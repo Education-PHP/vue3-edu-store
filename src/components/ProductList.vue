@@ -7,6 +7,7 @@
           <!-- Product component -->
           <product
               v-for="product in products"
+              :id="product.id"
               :key="product.id"
               :name="product.name"
               :category="product.category"
