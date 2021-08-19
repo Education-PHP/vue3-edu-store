@@ -10,19 +10,38 @@ const app = createApp({
     data: () => ({
         cartProducts: [],
     }),
-    computed: {
-        totalAmount() {
-            return this.cartProducts.length;
-        }
-    },
     methods: {
         addToCart(product) {
-
-            this.cartProducts.push(product);
+            this.cartProducts.push({...product, amount: 1});
         },
         isInCart(id) {
-           return !!this.cartProducts.find(item) => item.id === id);
-        }
+           return !!this.cartProducts.find((item) => item.id === id);
+        },
+        removeProduct(index) {
+            this.cartProducts.splice(index, 1);
+        },
+        addMore(index) {
+            const product = this.cartProducts[index];
+            this.cartProducts.splice(index, 1, {...product, amount: product.amount + 1});
+        },
+        removeOne(index) {
+            const product = this.cartProducts[index];
+            this.cartProducts.splice(index, 1, {...product, amount: product.amount - 1});
+        },
+    },
+    computed: {
+        isCartEmpty() {
+            return !!this.cartProducts.length;
+        },
+        totalAmount() {
+            return this.cartProducts.reduce((total, item) => total + item.amount, 0);
+        },
+        totalPrice() {
+            return this.cartProducts.reduce((total, {price, amount}) => total + (amount * price), 0);
+        },
+        cartProducts() {
+            return this.cartProducts;
+        },
     },
 });
 app.component("product-list", ProductList);

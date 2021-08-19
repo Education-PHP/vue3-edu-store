@@ -5,18 +5,22 @@
       <div class="modal-content">
         <div class="modal-header">
           <h5 class="modal-title" id="cartModalTitle">
-            Shopping Cart (7 Items)
+            Shopping Cart
           </h5>
           <button type="button" class="btn-close shadow-none" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
         <div class="modal-body p-4">
-          <!-- CartProductsList component -->
+          <div v-if="totalAmount > 0">
+            <!-- CartProductsList component -->
             <cart-product-list></cart-product-list>
-          <!-- CartBillingForm component -->
-          <cart-billing-form></cart-billing-form>
+            <!-- CartBillingForm component -->
+            <cart-billing-form></cart-billing-form>
+          </div>
+          <div v-else>Cart is empty!</div>
         </div>
         <div class="modal-footer">
-          <button type="button" class="btn btn-success">Place Order</button>
+          <button type="button" v-if="isError" :disabled="isError" class="btn btn-secondary">Place Order</button>
+          <button type="button" v-else  @click="order" class="btn btn-success">Place Order</button>
         </div>
       </div>
     </div>
@@ -28,7 +32,35 @@ import CartProductList from "./CartProductList";
 import CartBillingForm from "./CartBillingForm";
 export default {
   name: "CartModel",
-  components: {CartBillingForm, CartProductList}
+  components: {CartBillingForm, CartProductList},
+    computed: {
+      totalAmount() {
+        return this.$root.totalAmount;
+      },
+      products() {
+        return this.$root.cartProducts;
+      },
+    },
+  methods: {
+    order() {
+        console.log(this.products);
+        console.log(document.getElementById('firstName').value);
+        document.getElementById('firstName').value = "";
+        console.log(document.getElementById('lastName').value);
+        document.getElementById('lastName').value = "";
+        console.log(document.getElementById('city').value);
+        document.getElementById('city').value = "";
+        console.log(document.getElementById('address').value);
+        document.getElementById('address').value = "";
+        console.log(document.getElementById('email').value);
+        document.getElementById('email').value = "";
+        console.log(document.getElementById('phone').value);
+        document.getElementById('phone').value = "";
+    },
+    isError() {
+      this.isErrorInArray();
+    }
+  }
 }
 </script>
 

@@ -11,12 +11,13 @@
     <tbody>
     <!-- CartProductItem component -->
     <cart-product-item
-        v-for="product in products"
+        v-for="(product, index) in products"
         :key="product.id"
         :name="product.name"
         :price="product.price"
         :amount="product.amount"
         :image="product.image"
+        :index="index"
     ></cart-product-item>
     </tbody>
     <tfoot>
@@ -24,8 +25,8 @@
       <td class="text-end">
         Total:
       </td>
-      <td class="text-center">2</td>
-      <td class="text-end">$2998</td>
+      <td class="text-center">{{totalAmount}}</td>
+      <td class="text-end">{{totalPrice}}</td>
     </tr>
     </tfoot>
   </table>
@@ -35,12 +36,18 @@
 import CartProductItem from "./CartProductItem";
 export default {
   name: "CartProductList",
-  components: CartProductItem,
+  components: {CartProductItem},
   computed: {
     products() {
       return this.$root.cartProducts;
-    }
-    }
+    },
+    totalAmount() {
+      return this.$root.totalAmount;
+    },
+    totalPrice() {
+      return this.$root.totalPrice;
+    },
+  }
 }
 </script>
 

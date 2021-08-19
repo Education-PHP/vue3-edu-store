@@ -17,7 +17,7 @@
           <strong v-if="isAvailable" class="text-success">Available</strong>
           <strong v-else class="text-danger">Sold out</strong>
         </p>
-        <button @click="add" :disabled="(!isAvailable || isInCart)" :class="`btn ${isAvailable && !isInCart ? 'btn-success' : 'btn-secondary'}  w-100 shadow-none`">
+        <button @click="add" :disabled="(!isAvailable || isInCart)" :class="`btn ${(isAvailable && !isInCart) ? 'btn-success' : 'btn-secondary'}  w-100 shadow-none`">
           {{!isInCart ? 'Add to cart' : 'Added' }}
         </button>
       </div>
