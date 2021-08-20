@@ -39,9 +39,6 @@ const app = createApp({
         totalPrice() {
             return this.cartProducts.reduce((total, {price, amount}) => total + (amount * price), 0);
         },
-        cartProducts() {
-            return this.cartProducts;
-        },
     },
 });
 app.component("product-list", ProductList);

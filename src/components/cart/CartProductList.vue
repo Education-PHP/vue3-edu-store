@@ -47,7 +47,7 @@ export default {
     totalPrice() {
       return this.$root.totalPrice;
     },
-  }
+  },
 }
 </script>
 

@@ -13,19 +13,22 @@
     </div>
     <div class="col-12">
       <label for="city" class="form-label">City</label>
-      <input type="text" v-model="city" :class="{'form-control': true, 'is-invalid': !isCityNameValid}" id="city" placeholder="City">
+      <input type="text" v-model="city" :class="{'form-control': true, 'is-invalid': !isCityValid}" id="city" placeholder="City">
     </div>
     <div class="col-12">
       <label for="address" class="form-label">Address</label>
-      <input type="text" v-model="address" :class="{'form-control': true, 'is-invalid': !isAddressNameValid}" id="address" placeholder="Address">
+      <input type="text" v-model="address" :class="{'form-control': true, 'is-invalid': !isAddressValid}" id="address" placeholder="Address">
     </div>
     <div class="col-md-6">
       <label for="email" class="form-label">Email Address</label>
-      <input type="email" v-model="emailAddress" :class="{'form-control': true, 'is-invalid': !isEmailAddressNameValid}" id="email" placeholder="Email Address">
+      <input type="email" v-model="emailAddress" :class="{'form-control': true, 'is-invalid': !isEmailAddressValid}" id="email" placeholder="Email Address">
     </div>
     <div class="col-md-6">
       <label for="phone" class="form-label">Phone</label>
       <input type="text" v-model="phone" :class="{'form-control': true, 'is-invalid': !isPhoneNumberValid}" id="phone" placeholder="+380 ">
+    </div>
+    <div class="modal-footer">
+      <button type="button" @click="order" :disabled="hasError" :class="`${(hasError) ? 'btn btn-secondary' : 'btn btn-success'}`">Place Order</button>
     </div>
   </form>
 </template>
@@ -34,7 +37,6 @@
 export default {
   name: "CartBillingForm",
   data: () => ({
-    errors : [],
     firstName: "",
     lastName: "",
     city: "",
@@ -43,9 +45,9 @@ export default {
     phone: "",
     isFirstNameValid : true,
     isLastNameValid : true,
-    isCityNameValid : true,
-    isAddressNameValid : true,
-    isEmailAddressNameValid : true,
+    isCityValid : true,
+    isAddressValid : true,
+    isEmailAddressValid : true,
     isPhoneNumberValid : true
   }),
   watch: {
@@ -55,7 +57,6 @@ export default {
           || (newValue.length > 10)
           || (newValue !== newValue.replace(/^\s+|\s+$/g,''))) {
         this.isFirstNameValid = false;
-        this.errors.push('Incorrectly entered firstname');
       }
     },
     lastName(newValue) {
@@ -64,7 +65,6 @@ export default {
           || (newValue.length > 20)
           || (newValue !== newValue.replace(/^\s+|\s+$/g,''))) {
         this.isLastNameValid = false;
-        this.errors.push('Incorrectly entered lastname');
       }
     },
     city(newValue) {
@@ -72,23 +72,20 @@ export default {
           || (newValue[0] !== newValue[0].toUpperCase())
           || (newValue.length > 20)
           || (newValue !== newValue.replace(/^\s+|\s+$/g,''))) {
-        this.isCityNameValid = false;
-        this.errors.push('Incorrectly entered name city');
+        this.isCityValid = false;
       }
     },
     address(newValue) {
       if ((newValue === "")
           || newValue.length > 50) {
-        this.isAddressNameValid = false;
-        this.errors.push('Incorrectly entered name address');
+        this.isAddressValid = false;
       }
     },
     emailAddress(newValue) {
       if ((newValue === "")
           || (newValue.length > 30)
           || (newValue !== newValue.replace(/^\s+|\s+$/g,''))) {
-        this.isEmailAddressNameValid = false;
-        this.errors.push('Incorrectly entered email');
+        this.isEmailAddressValid = false;
       }
     },
     phone(newValue) {
@@ -96,18 +93,35 @@ export default {
           || (newValue.length > 9)
           || (newValue !== newValue.replace(/^\s+|\s+$/g,''))) {
         this.isPhoneNumberValid = false;
-        this.errors.push('Incorrectly entered phone');
       }
     }
   },
   methods: {
-    placeOrder() {}
+    placeOrder() {},
+    order() {
+      console.log(this.products);
+      console.log(this.firstName, this.lastName, this.city, this.address, this.emailAddress, this.phone);
+      this.firstName = "";
+      this.lastName = "";
+      this.city = "";
+      this.address = "";
+      this.emailAddress = "";
+      this.phone = "";
     },
+  },
   computed: {
-    isErrorInArray() {
-      return this.errors.length > 0;
-    }
-  }
+    hasError() {
+      return (!this.isFirstNameValid
+      || !this.isLastNameValid
+      || !this.isCityValid
+      || !this.isAddressValid
+      || !this.isEmailAddressValid
+      || !this.isPhoneNumberValid);
+    },
+    products() {
+      return this.$root.cartProducts;
+    },
+  },
 }
 </script>
 
