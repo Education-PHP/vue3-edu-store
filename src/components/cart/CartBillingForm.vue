@@ -52,6 +52,7 @@ export default {
   }),
   watch: {
     firstName(newValue) {
+      this.isFirstNameValid = true;
       if ((newValue === "")
           ||(newValue[0] !== newValue[0].toUpperCase())
           || (newValue.length > 10)
@@ -60,6 +61,7 @@ export default {
       }
     },
     lastName(newValue) {
+      this.isLastNameValid = true;
       if ((newValue === "")
           || (newValue[0] !== newValue[0].toUpperCase())
           || (newValue.length > 20)
@@ -68,6 +70,7 @@ export default {
       }
     },
     city(newValue) {
+      this.isCityValid = true;
       if ((newValue === "")
           || (newValue[0] !== newValue[0].toUpperCase())
           || (newValue.length > 20)
@@ -76,12 +79,14 @@ export default {
       }
     },
     address(newValue) {
+      this.isAddressValid = true;
       if ((newValue === "")
           || newValue.length > 50) {
         this.isAddressValid = false;
       }
     },
     emailAddress(newValue) {
+      this.isEmailAddressValid = true;
       if ((newValue === "")
           || (newValue.length > 30)
           || (newValue !== newValue.replace(/^\s+|\s+$/g,''))) {
@@ -89,8 +94,9 @@ export default {
       }
     },
     phone(newValue) {
+      this.isPhoneNumberValid = true;
       if ((newValue === "")
-          || (newValue.length > 9)
+          || (newValue.length !== 8)
           || (newValue !== newValue.replace(/^\s+|\s+$/g,''))) {
         this.isPhoneNumberValid = false;
       }
