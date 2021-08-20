@@ -19,8 +19,7 @@
           <div v-else>Cart is empty!</div>
         </div>
         <div class="modal-footer">
-          <button type="button" v-if="isError" :disabled="isError" class="btn btn-secondary">Place Order</button>
-          <button type="button" v-else  @click="order" class="btn btn-success">Place Order</button>
+          <button type="button" @click="order" :disabled="isError" :class="`${(isError) ? 'btn btn-secondary' : 'btn btn-success'}`">Place Order</button>
         </div>
       </div>
     </div>
